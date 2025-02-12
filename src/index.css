@@ -14,11 +14,6 @@
 .slider-container {
     width: 100%;
     overflow: hidden;
-  }
-
-.slick-slide {
-  display: flex;
-  justify-content: center;
 }
 
 .nft_coll {
