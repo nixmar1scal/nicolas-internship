@@ -32,12 +32,8 @@ function Countdown({ item }) {
   };
 
   return (
-    <div className="countdown">
-      <img src={item.nftImage} alt={item.title} />
-      <h3>{item.title}</h3>
-      <p>Price: {item.price} ETH</p>
-      <p>Likes: {item.likes} ❤</p>
-      <p>Expires in: {timeLeft > 0 ? formatTime(timeLeft) : "Expired"}</p>
+    <div className="de_countdown">
+      {timeLeft > 0 ? formatTime(timeLeft) : "Expired"}
     </div>
   );
 }
