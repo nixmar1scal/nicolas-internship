@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Countdown from "./Countdown";
 
 export default function Carousel({ items }) {
   const settings = {
@@ -50,7 +51,7 @@ export default function Carousel({ items }) {
                   <i className="fa fa-check"></i>
                 </Link>
               </div>
-              <div className="de_countdown">{item.expiryDate}</div>
+              <Countdown item={item} />
 
               <div className="nft__item_wrap">
                 <div className="nft__item_extra">
