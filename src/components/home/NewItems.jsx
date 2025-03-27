@@ -5,6 +5,25 @@ import Countdown from "../UI/Countdown";
 
 const NewItems = () => {
   const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [skeletonCount, setSkeletonCount] = useState(3);
+
+  useEffect(() => {
+    const updateSkeletonCount = () => {
+      if (window.innerWidth < 768) {
+        setSkeletonCount(1);
+      } else if (window.innerWidth < 1024) {
+        setSkeletonCount(2);
+      } else {
+        setSkeletonCount(3);
+      }
+    };
+
+    updateSkeletonCount();
+    window.addEventListener("resize", updateSkeletonCount);
+
+    return () => window.removeEventListener("resize", updateSkeletonCount);
+  }, []);
 
   useEffect(() => {
     async function fetchItems() {
@@ -15,6 +34,8 @@ const NewItems = () => {
         setItems(data);
       } catch (err) {
         console.error("Error fetching items", err);
+      } finally {
+        setLoading(false);
       }
     }
     fetchItems();
@@ -30,13 +51,24 @@ const NewItems = () => {
               <div className="small-border bg-color-2"></div>
             </div>
           </div>
-          <Carousel
-            items={items.map((item) => ({
-              ...item,
-              expiryDate: item.expiryDate,
-              countdown: <Countdown item={item} />
-            }))}
-          />
+          {loading ? (
+            <div className="skeleton-new-items">
+              {[...Array(skeletonCount)].map((_, index) => (
+                <div key={index} className="skeleton-card">
+                  <div className="skeleton-image"></div>
+                  <div className="skeleton-text"></div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <Carousel
+              items={items.map((item) => ({
+                ...item,
+                expiryDate: item.expiryDate,
+                countdown: <Countdown item={item} />,
+              }))}
+            />
+          )}
         </div>
       </div>
     </section>

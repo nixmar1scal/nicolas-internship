@@ -51,9 +51,12 @@ const HotCollections = () => {
             </div>
           </div>
           {loading ? (
-            <div className="skeleton-container">
+            <div className="skeleton-hot-collections">
               {[...Array(skeletonCount)].map((_, index) => (
-                <div className="skeleton-card" key={index}></div>
+                <div key={index} className="skeleton-card">
+                <div className="skeleton-image"></div>
+                <div className="skeleton-text"></div>
+              </div>
               ))}
             </div>
           ) : (
