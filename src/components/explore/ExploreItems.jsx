@@ -25,38 +25,22 @@ const ExploreItems = () => {
   useEffect(() => {
     async function fetchNFTs() {
       try {
-        const { data } = await axios.get(
-          `https://us-central1-nft-cloud-functions.cloudfunctions.net/explore`
-        );
+        setLoading(true);
+        const url = sortOption 
+          ? `https://us-central1-nft-cloud-functions.cloudfunctions.net/explore?filter=${sortOption}`
+          : 'https://us-central1-nft-cloud-functions.cloudfunctions.net/explore';
+        
+        const { data } = await axios.get(url);
         setNfts(data);
       } catch (err) {
-        console.error("Error fetching items", err);
+        console.error("Error fetching NFTs:", err);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
-    }
+    };
+
     fetchNFTs();
-  }, []);
-
-  useEffect(() => {
-    if (nfts.length === 0) return;
-
-    const sortedNfts = [...nfts].sort((a, b) => {
-      switch (sortOption) {
-        case "price_low_to_high":
-          return a.price - b.price;
-        case "price_high_to_low":
-          return b.price - a.price;
-        case "likes_high_to_low":
-          return b.likes - a.likes;
-        case "ending_soon":
-          return new Date(a.expiryDate) - new Date(b.expiryDate);
-        default:
-          return a.id - b.id;
-      }
-    });
-
-    setNfts(sortedNfts);
-  }, [sortOption, nfts.lenght]);
+  }, [sortOption]);
 
   const handleFilterChange = (e) => {
     setSortOption(e.target.value);
@@ -74,7 +58,7 @@ const ExploreItems = () => {
           className="form-select"
           value={sortOption}
           onChange={handleFilterChange}
-          disable={loading}
+          disabled={loading}
         >
           <option value="">Default</option>
           <option value="price_low_to_high">Price, Low to High</option>
@@ -89,16 +73,16 @@ const ExploreItems = () => {
           {[...Array(skeletonCount)].map((_, index) => (
             <div key={index} className="skeleton-card">
               <div className="skeleton-image"></div>
-              <div className="skeleton-teext"></div>
-              <div className="skeleton-teext short"></div>
+              <div className="skeleton-text"></div>
+              <div className="skeleton-text short"></div>
             </div>
           ))}
         </div>
       ) : (
         <div className="row">
-          {nfts.slice(0, visibleCount).map((item, index) => (
+          {nfts.slice(0, visibleCount).map((item) => (
             <div
-              key={index}
+              key={item.id}
               className="d-item col-lg-3 col-md-6 col-sm-6 col-xs-12"
               style={{ display: "block", backgroundSize: "cover" }}
             >

@@ -256,7 +256,7 @@ NEWITEMS
 
 .carousel-item img:not(.author-image) {
   width: 100% !important;
-  height: 270px !important;
+  height: 260px !important;
   object-fit: cover !important;
 }
 
