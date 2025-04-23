@@ -72,7 +72,7 @@ export default function Carousel({ items }) {
                   </div>
                 </div>
 
-                <Link to="/item-details">
+                <Link to={`/author/${item.authorId}/items-details/${item.nftId}`}>
                   <img
                     src={item.nftImage}
                     className="nft__item_preview"
@@ -81,7 +81,7 @@ export default function Carousel({ items }) {
                 </Link>
               </div>
               <div className="nft__item_info">
-                <Link to="/item-details">
+                <Link to={`/author/${item.authorId}/items-details/${item.nftId}`}>
                   <h4>{item.title}</h4>
                 </Link>
                 <div className="nft__item_price">{item.price}</div>
