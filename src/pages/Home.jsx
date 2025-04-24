@@ -13,9 +13,10 @@ const Home = () => {
   useEffect(() => {
     AOS.init({
       duration: 800,
-      once: true,
-      offset: 100,
-    })
+      once: false,
+      easing: "ease-in-out",
+    });
+
     window.scrollTo(0, 0);
   }, []);
 
@@ -25,11 +26,11 @@ const Home = () => {
         <div id="top"></div>
 
         <div data-aos="fade-down">
-        <Landing />
+          <Landing />
         </div>
 
         <div data-oas="fade-up" data-aos-delay="100">
-        <LandingIntro />
+          <LandingIntro />
         </div>
 
         <div data-aos="zoom-in" data-aos-delay="200">
